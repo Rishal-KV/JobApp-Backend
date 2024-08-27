@@ -13,7 +13,6 @@ export const signUp = async (req, res) => {
   try {
     const { error, value } = userValidationSchema.validate(req.body);
     if (error) {
-      console.log(error);
       return res.status(400).json({ error: error.details[0].message });
     }
 
@@ -40,7 +39,6 @@ export const signUp = async (req, res) => {
 
     res.status(201).json({ status: true, message: "Signup successful" });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ status: false, message: "Server error" });
   }
 };
@@ -67,7 +65,6 @@ export const login = async (req, res) => {
       res.status(401).json({ status: false, message: "Invalid password" });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ status: false, message: "Server error" });
   }
 };
@@ -94,11 +91,9 @@ export const listPost = async (req, res) => {
     const jobs = await JobPost.find(filter);
     res.json({ jobs });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 // Apply for a job
 export const applyForJob = async (req, res) => {
@@ -111,9 +106,8 @@ export const applyForJob = async (req, res) => {
       { upsert: true, new: true }
     );
 
-    res.status(200).json({ message: "Application successful!",application });
+    res.status(200).json({ message: "Application successful!", application });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -125,10 +119,9 @@ export const Applications = async (req, res) => {
     const jobApp = await Application.findOne({ userId: userId })
       .populate("appliedJobs")
       .exec();
-    console.log(jobApp, "jops");
+
     res.status(200).json({ jobApp });
   } catch (error) {
-    console.log(error, "errr");
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };

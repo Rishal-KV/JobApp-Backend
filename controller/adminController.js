@@ -28,7 +28,6 @@ export const postJob = async (req, res) => {
 //list specific admin jobs
 export const listPost = async (req, res) => {
   try {
-    console.log(req.query);
     const jobs = await JobPost.find({ creatorId: req.query.id });
     res.json({ jobs });
   } catch (error) {
@@ -39,7 +38,6 @@ export const listPost = async (req, res) => {
 //update job post
 export const updateJobPost = async (req, res) => {
   try {
-    console.log(req.body);
     const { error, value } = updateJobPostSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
